@@ -1,6 +1,8 @@
 // Tic-Tac-Toe: two players on one screen.
 const boardEl = document.getElementById('board');
+const statusEl = document.getElementById('status');
 const cells = Array(9).fill(null);
+let player = 'X';
 
 const MARKS = {
   X: '<svg class="mark mark-x" viewBox="0 0 100 100"><line x1="18" y1="18" x2="82" y2="82"/><line x1="82" y1="18" x2="18" y2="82"/></svg>',
@@ -15,7 +17,10 @@ function render() {
 
 function play(i) {
   if (cells[i]) return;
-  cells[i] = 'X';
+  cells[i] = player;
+  player = player === 'X' ? 'O' : 'X';
+  statusEl.textContent = `Player ${player}`;
+  statusEl.className = `pill ${player.toLowerCase()}`;
   render();
 }
 
