@@ -1,27 +1,64 @@
 // Tic-Tac-Toe: two players on one screen.
+const LINES = [
+  [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
+  [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
+  [0, 4, 8], [2, 4, 6],            // diagonals
+];
+
 const boardEl = document.getElementById('board');
 const statusEl = document.getElementById('status');
+const statusLabelEl = document.getElementById('status-label');
 const cells = Array(9).fill(null);
 let player = 'X';
+let over = false;
 
 const MARKS = {
   X: '<svg class="mark mark-x" viewBox="0 0 100 100"><line x1="18" y1="18" x2="82" y2="82"/><line x1="82" y1="18" x2="18" y2="82"/></svg>',
   O: '<svg class="mark mark-o" viewBox="0 0 100 100"><circle cx="50" cy="50" r="33"/></svg>',
 };
 
-function render() {
+function winner(board) {
+  for (const line of LINES) {
+    const [a, b, c] = line;
+    if (board[a] && board[a] === board[b] && board[a] === board[c]) return { player: board[a], line };
+  }
+  return null;
+}
+
+function render(win) {
   boardEl.querySelectorAll('.cell').forEach((cell, i) => {
     cell.innerHTML = cells[i] ? MARKS[cells[i]] : '';
+    cell.disabled = over || cells[i] !== null;
+    cell.classList.toggle('win', !!win && win.line.includes(i));
+    cell.classList.toggle('o', !!win && win.player === 'O');
   });
 }
 
+function setStatus(label, text, kind) {
+  statusLabelEl.textContent = label;
+  statusEl.textContent = text;
+  statusEl.className = `pill ${kind}`;
+}
+
 function play(i) {
-  if (cells[i]) return;
+  if (over || cells[i]) return;
   cells[i] = player;
+  const win = winner(cells);
+  if (win) {
+    over = true;
+    setStatus('Round over', `${win.player} wins!`, win.player.toLowerCase());
+    render(win);
+    return;
+  }
+  if (cells.every(Boolean)) {
+    over = true;
+    setStatus('Round over', "It's a draw", 'draw');
+    render(null);
+    return;
+  }
   player = player === 'X' ? 'O' : 'X';
-  statusEl.textContent = `Player ${player}`;
-  statusEl.className = `pill ${player.toLowerCase()}`;
-  render();
+  setStatus('Next turn', `Player ${player}`, player.toLowerCase());
+  render(null);
 }
 
 for (let i = 0; i < 9; i++) {
@@ -30,4 +67,4 @@ for (let i = 0; i < 9; i++) {
   cell.addEventListener('click', () => play(i));
   boardEl.appendChild(cell);
 }
-render();
+render(null);

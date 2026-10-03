@@ -29,3 +29,7 @@ body {
 .card-label { color: #7A7F8C; font-size: 14px; }
 .pill { border-radius: 26px; padding: 10px 20px; font-size: 22px; font-weight: 700; background: rgba(228, 87, 46, 0.12); color: #E4572E; }
 .pill.o { background: rgba(45, 127, 249, 0.12); color: #2D7FF9; }
+.cell.win { background: rgba(228, 87, 46, 0.12); }
+.cell.win.o { background: rgba(45, 127, 249, 0.12); }
+.cell:disabled { cursor: default; }
+.pill.draw { background: #EEF0F2; color: #7A7F8C; }
