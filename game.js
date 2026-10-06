@@ -8,7 +8,8 @@ const LINES = [
 const boardEl = document.getElementById('board');
 const statusEl = document.getElementById('status');
 const statusLabelEl = document.getElementById('status-label');
-const cells = Array(9).fill(null);
+const restartEl = document.getElementById('restart');
+let cells = Array(9).fill(null);
 let player = 'X';
 let over = false;
 
@@ -47,17 +48,28 @@ function play(i) {
   if (win) {
     over = true;
     setStatus('Round over', `${win.player} wins!`, win.player.toLowerCase());
+    restartEl.textContent = 'Play again';
     render(win);
     return;
   }
   if (cells.every(Boolean)) {
     over = true;
     setStatus('Round over', "It's a draw", 'draw');
+    restartEl.textContent = 'Play again';
     render(null);
     return;
   }
   player = player === 'X' ? 'O' : 'X';
   setStatus('Next turn', `Player ${player}`, player.toLowerCase());
+  render(null);
+}
+
+function restart() {
+  cells = Array(9).fill(null);
+  player = 'X';
+  over = false;
+  setStatus('Next turn', 'Player X', 'x');
+  restartEl.textContent = 'Restart round';
   render(null);
 }
 
@@ -67,4 +79,5 @@ for (let i = 0; i < 9; i++) {
   cell.addEventListener('click', () => play(i));
   boardEl.appendChild(cell);
 }
-render(null);
+restartEl.addEventListener('click', restart);
+restart();
