@@ -39,3 +39,5 @@ body {
 @media (max-width: 860px) {
   .app { grid-template-columns: minmax(0, 440px); justify-content: center; padding: 32px 16px; }
 }
+.cell:focus-visible { outline: 3px solid #2D7FF9; outline-offset: -6px; border-radius: 12px; }
+.button:focus-visible { outline: 3px solid #2D7FF9; outline-offset: 3px; }

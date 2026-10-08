@@ -1,4 +1,4 @@
-// Tic-Tac-Toe: two players on one screen.
+// Tic-Tac-Toe v1: two players on one screen. No backend, nothing is stored.
 const LINES = [
   [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
   [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
@@ -9,13 +9,14 @@ const boardEl = document.getElementById('board');
 const statusEl = document.getElementById('status');
 const statusLabelEl = document.getElementById('status-label');
 const restartEl = document.getElementById('restart');
+
 let cells = Array(9).fill(null);
 let player = 'X';
 let over = false;
 
 const MARKS = {
-  X: '<svg class="mark mark-x" viewBox="0 0 100 100"><line x1="18" y1="18" x2="82" y2="82"/><line x1="82" y1="18" x2="18" y2="82"/></svg>',
-  O: '<svg class="mark mark-o" viewBox="0 0 100 100"><circle cx="50" cy="50" r="33"/></svg>',
+  X: '<svg class="mark mark-x" viewBox="0 0 100 100" aria-hidden="true"><line x1="18" y1="18" x2="82" y2="82"/><line x1="82" y1="18" x2="18" y2="82"/></svg>',
+  O: '<svg class="mark mark-o" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="33"/></svg>',
 };
 
 function winner(board) {
@@ -28,10 +29,12 @@ function winner(board) {
 
 function render(win) {
   boardEl.querySelectorAll('.cell').forEach((cell, i) => {
-    cell.innerHTML = cells[i] ? MARKS[cells[i]] : '';
-    cell.disabled = over || cells[i] !== null;
+    const mark = cells[i];
+    cell.innerHTML = mark ? MARKS[mark] : '';
+    cell.disabled = over || mark !== null;
     cell.classList.toggle('win', !!win && win.line.includes(i));
     cell.classList.toggle('o', !!win && win.player === 'O');
+    cell.setAttribute('aria-label', `Row ${Math.floor(i / 3) + 1}, column ${(i % 3) + 1}: ${mark ?? 'empty'}`);
   });
 }
 
@@ -76,6 +79,7 @@ function restart() {
 for (let i = 0; i < 9; i++) {
   const cell = document.createElement('button');
   cell.className = 'cell';
+  cell.type = 'button';
   cell.addEventListener('click', () => play(i));
   boardEl.appendChild(cell);
 }
