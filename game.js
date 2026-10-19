@@ -9,10 +9,14 @@ const boardEl = document.getElementById('board');
 const statusEl = document.getElementById('status');
 const statusLabelEl = document.getElementById('status-label');
 const restartEl = document.getElementById('restart');
+const scoreXEl = document.getElementById('score-x');
+const scoreOEl = document.getElementById('score-o');
+const resetScoreEl = document.getElementById('reset-score');
 
 let cells = Array(9).fill(null);
 let player = 'X';
 let over = false;
+let score = { X: 0, O: 0 };
 
 const MARKS = {
   X: '<svg class="mark mark-x" viewBox="0 0 100 100" aria-hidden="true"><line x1="18" y1="18" x2="82" y2="82"/><line x1="82" y1="18" x2="18" y2="82"/></svg>',
@@ -44,12 +48,19 @@ function setStatus(label, text, kind) {
   statusEl.className = `pill ${kind}`;
 }
 
+function renderScore() {
+  scoreXEl.textContent = score.X;
+  scoreOEl.textContent = score.O;
+}
+
 function play(i) {
   if (over || cells[i]) return;
   cells[i] = player;
   const win = winner(cells);
   if (win) {
     over = true;
+    score[win.player] += 1;
+    renderScore();
     setStatus('Round over', `${win.player} wins!`, win.player.toLowerCase());
     restartEl.textContent = 'Play again';
     render(win);
@@ -76,6 +87,11 @@ function restart() {
   render(null);
 }
 
+function resetScore() {
+  score = { X: 0, O: 0 };
+  renderScore();
+}
+
 for (let i = 0; i < 9; i++) {
   const cell = document.createElement('button');
   cell.className = 'cell';
@@ -84,4 +100,6 @@ for (let i = 0; i < 9; i++) {
   boardEl.appendChild(cell);
 }
 restartEl.addEventListener('click', restart);
+resetScoreEl.addEventListener('click', resetScore);
 restart();
+renderScore();
