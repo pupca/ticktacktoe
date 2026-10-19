@@ -85,6 +85,18 @@ body {
 }
 .card-label { color: var(--muted); font-size: 14px; font-weight: 500; }
 
+.score-card { gap: 10px; }
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+.score-row.x .score-name { color: var(--x); }
+.score-row.o .score-name { color: var(--o); }
+.score-value { font-size: 22px; font-weight: 700; color: var(--ink); }
+
 .pill {
   border-radius: 26px;
   padding: 10px 20px;
