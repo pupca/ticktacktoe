@@ -9,9 +9,9 @@ const boardEl = document.getElementById('board');
 const statusEl = document.getElementById('status');
 const statusLabelEl = document.getElementById('status-label');
 const restartEl = document.getElementById('restart');
+const resetScoreEl = document.getElementById('reset-score');
 const scoreXEl = document.getElementById('score-x');
 const scoreOEl = document.getElementById('score-o');
-const resetScoreEl = document.getElementById('reset-score');
 
 let cells = Array(9).fill(null);
 let player = 'X';
@@ -101,5 +101,5 @@ for (let i = 0; i < 9; i++) {
 }
 restartEl.addEventListener('click', restart);
 resetScoreEl.addEventListener('click', resetScore);
-restart();
 renderScore();
+restart();
