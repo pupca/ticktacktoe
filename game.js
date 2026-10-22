@@ -9,10 +9,13 @@ const boardEl = document.getElementById('board');
 const statusEl = document.getElementById('status');
 const statusLabelEl = document.getElementById('status-label');
 const restartEl = document.getElementById('restart');
+const scoreXEl = document.getElementById('score-x');
+const scoreOEl = document.getElementById('score-o');
 
 let cells = Array(9).fill(null);
 let player = 'X';
 let over = false;
+let score = { X: 0, O: 0 };
 
 const MARKS = {
   X: '<svg class="mark mark-x" viewBox="0 0 100 100" aria-hidden="true"><line x1="18" y1="18" x2="82" y2="82"/><line x1="82" y1="18" x2="18" y2="82"/></svg>',
@@ -38,6 +41,11 @@ function render(win) {
   });
 }
 
+function renderScore() {
+  scoreXEl.textContent = score.X;
+  scoreOEl.textContent = score.O;
+}
+
 function setStatus(label, text, kind) {
   statusLabelEl.textContent = label;
   statusEl.textContent = text;
@@ -50,6 +58,8 @@ function play(i) {
   const win = winner(cells);
   if (win) {
     over = true;
+    score = addWin(score, win.player);
+    renderScore();
     setStatus('Round over', `${win.player} wins!`, win.player.toLowerCase());
     restartEl.textContent = 'Play again';
     render(win);
@@ -84,4 +94,5 @@ for (let i = 0; i < 9; i++) {
   boardEl.appendChild(cell);
 }
 restartEl.addEventListener('click', restart);
+renderScore();
 restart();
