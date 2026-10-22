@@ -1,4 +1,4 @@
-// Tic-Tac-Toe v1: two players on one screen. No backend, nothing is stored.
+// Tic-Tac-Toe: two players on one screen. No backend, nothing is stored or sent; score lives in the page only.
 const LINES = [
   [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
   [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
@@ -9,10 +9,14 @@ const boardEl = document.getElementById('board');
 const statusEl = document.getElementById('status');
 const statusLabelEl = document.getElementById('status-label');
 const restartEl = document.getElementById('restart');
+const resetScoreEl = document.getElementById('reset-score');
+const rowEls = { X: document.getElementById('row-x'), O: document.getElementById('row-o') };
+const countEls = { X: document.getElementById('count-x'), O: document.getElementById('count-o') };
 
 let cells = Array(9).fill(null);
 let player = 'X';
 let over = false;
+let score = { X: 0, O: 0 };
 
 const MARKS = {
   X: '<svg class="mark mark-x" viewBox="0 0 100 100" aria-hidden="true"><line x1="18" y1="18" x2="82" y2="82"/><line x1="82" y1="18" x2="18" y2="82"/></svg>',
@@ -44,12 +48,22 @@ function setStatus(label, text, kind) {
   statusEl.className = `pill ${kind}`;
 }
 
+function renderScore() {
+  const leader = score.X === score.O ? null : score.X > score.O ? 'X' : 'O';
+  for (const p of ['X', 'O']) {
+    countEls[p].textContent = score[p];
+    rowEls[p].classList.toggle('leader', p === leader);
+  }
+}
+
 function play(i) {
   if (over || cells[i]) return;
   cells[i] = player;
   const win = winner(cells);
   if (win) {
     over = true;
+    score[win.player] += 1;
+    renderScore();
     setStatus('Round over', `${win.player} wins!`, win.player.toLowerCase());
     restartEl.textContent = 'Play again';
     render(win);
@@ -84,4 +98,9 @@ for (let i = 0; i < 9; i++) {
   boardEl.appendChild(cell);
 }
 restartEl.addEventListener('click', restart);
+resetScoreEl.addEventListener('click', () => {
+  score = { X: 0, O: 0 };
+  renderScore();
+});
 restart();
+renderScore();

@@ -24,7 +24,21 @@
         <span class="card-label" id="status-label">Next turn</span>
         <span class="pill" id="status">Player X</span>
       </div>
-      <button class="button" id="restart" type="button">Restart round</button>
+      <div class="button-row">
+        <button class="button" id="restart" type="button">Restart round</button>
+        <button class="button" id="reset-score" type="button">Reset score</button>
+      </div>
+      <section class="card score-card" aria-label="Score">
+        <span class="card-label">Score</span>
+        <div class="score-row x" id="row-x">
+          <span class="name">Player X</span>
+          <span class="count" id="count-x">0</span>
+        </div>
+        <div class="score-row o" id="row-o">
+          <span class="name">Player O</span>
+          <span class="count" id="count-o">0</span>
+        </div>
+      </section>
     </aside>
 
     <footer class="rules">Draw = all nine squares filled without a winner.</footer>

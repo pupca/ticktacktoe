@@ -110,6 +110,15 @@ body {
 .button:hover { filter: brightness(1.15); }
 .button:focus-visible { outline: 3px solid var(--o); outline-offset: 3px; }
 
+.button-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+
+.score-row { display: flex; justify-content: space-between; align-items: center; font-size: 17px; }
+.score-row .name { font-weight: 500; }
+.score-row.x .name { color: var(--x); }
+.score-row.o .name { color: var(--o); }
+.score-row.leader .name { font-weight: 700; }
+.score-row .count { font-weight: 700; }
+
 .rules { grid-area: rules; color: var(--muted); font-size: 13px; }
 
 @media (max-width: 860px) {
@@ -119,4 +128,5 @@ body {
     justify-content: center;
     padding: 32px 16px;
   }
+  .button-row { grid-template-columns: 1fr; }
 }
