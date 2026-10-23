@@ -14,6 +14,7 @@ const scoreEls = { X: document.getElementById('score-x'), O: document.getElement
 let cells = Array(9).fill(null);
 let player = 'X';
 let over = false;
+// Score board (GM-859, design GM-862): wins per player, kept in the page only.
 let wins = { X: 0, O: 0 };
 
 const MARKS = {
