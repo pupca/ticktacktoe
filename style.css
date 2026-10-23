@@ -85,6 +85,14 @@ body {
 }
 .card-label { color: var(--muted); font-size: 14px; font-weight: 500; }
 
+.score-card { height: 150px; align-content: start; }
+.score-row { display: flex; justify-content: space-between; align-items: center; font-size: 17px; font-weight: 600; }
+.score-player { display: flex; align-items: center; gap: 10px; }
+.score-count { font-size: 22px; font-weight: 700; }
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.dot-x { background: var(--x); }
+.dot-o { background: var(--o); }
+
 .pill {
   border-radius: 26px;
   padding: 10px 20px;
