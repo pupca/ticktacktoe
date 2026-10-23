@@ -110,6 +110,19 @@ body {
 .button:hover { filter: brightness(1.15); }
 .button:focus-visible { outline: 3px solid var(--o); outline-offset: 3px; }
 
+.score-card { gap: 10px; }
+.score-card h2 { margin: 0; }
+.score-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 18px;
+  font-weight: 600;
+}
+.score-row.x { color: var(--x); }
+.score-row.o { color: var(--o); }
+.score-count { color: var(--ink); font-weight: 700; }
+
 .rules { grid-area: rules; color: var(--muted); font-size: 13px; }
 
 @media (max-width: 860px) {
