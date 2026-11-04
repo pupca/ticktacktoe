@@ -85,6 +85,16 @@ body {
 }
 .card-label { color: var(--muted); font-size: 14px; font-weight: 500; }
 
+.score-card { height: 150px; align-content: start; }
+.score-card h2 { margin: 0; }
+.score-hint { margin: 0; color: var(--muted); font-size: 14px; }
+.score-hint[hidden] { display: none; }
+.score-rows { margin: 0; display: grid; gap: 8px; }
+.score-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 22px; font-weight: 700; }
+.score-row dt { color: var(--x); }
+.score-row.o dt { color: var(--o); }
+.score-row dd { margin: 0; color: var(--ink); }
+
 .pill {
   border-radius: 26px;
   padding: 10px 20px;
@@ -119,4 +129,5 @@ body {
     justify-content: center;
     padding: 32px 16px;
   }
+  .score-card { width: 350px; max-width: 100%; }
 }

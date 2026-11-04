@@ -9,10 +9,14 @@ const boardEl = document.getElementById('board');
 const statusEl = document.getElementById('status');
 const statusLabelEl = document.getElementById('status-label');
 const restartEl = document.getElementById('restart');
+const scoreHintEl = document.getElementById('score-hint');
+const scoreEls = { X: document.getElementById('score-x'), O: document.getElementById('score-o') };
 
 let cells = Array(9).fill(null);
 let player = 'X';
 let over = false;
+let score = { X: 0, O: 0 };
+let rounds = 0;
 
 const MARKS = {
   X: '<svg class="mark mark-x" viewBox="0 0 100 100" aria-hidden="true"><line x1="18" y1="18" x2="82" y2="82"/><line x1="82" y1="18" x2="18" y2="82"/></svg>',
@@ -38,6 +42,12 @@ function render(win) {
   });
 }
 
+function renderScore() {
+  scoreHintEl.hidden = rounds > 0;
+  scoreEls.X.textContent = score.X;
+  scoreEls.O.textContent = score.O;
+}
+
 function setStatus(label, text, kind) {
   statusLabelEl.textContent = label;
   statusEl.textContent = text;
@@ -50,6 +60,9 @@ function play(i) {
   const win = winner(cells);
   if (win) {
     over = true;
+    score[win.player] += 1;
+    rounds += 1;
+    renderScore();
     setStatus('Round over', `${win.player} wins!`, win.player.toLowerCase());
     restartEl.textContent = 'Play again';
     render(win);
@@ -57,6 +70,8 @@ function play(i) {
   }
   if (cells.every(Boolean)) {
     over = true;
+    rounds += 1;
+    renderScore();
     setStatus('Round over', "It's a draw", 'draw');
     restartEl.textContent = 'Play again';
     render(null);
@@ -84,4 +99,5 @@ for (let i = 0; i < 9; i++) {
   boardEl.appendChild(cell);
 }
 restartEl.addEventListener('click', restart);
+renderScore();
 restart();
