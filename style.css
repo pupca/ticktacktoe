@@ -6,6 +6,8 @@
   --line: #E6E1D6;
   --x: #E4572E;
   --o: #2D7FF9;
+  --x-label: #B03418;
+  --o-label: #1A5FD0;
   --shadow: 0 10px 30px rgba(31, 36, 48, 0.08);
 }
 
@@ -95,6 +97,22 @@ body {
 }
 .pill.o { background: rgba(45, 127, 249, 0.12); color: var(--o); }
 .pill.draw { background: #EEF0F2; color: var(--muted); }
+
+.scores { display: grid; gap: 10px; }
+.score {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: 26px;
+  padding: 8px 20px;
+  background: rgba(228, 87, 46, 0.12);
+}
+.score-o { background: rgba(45, 127, 249, 0.12); }
+.score-name { font-size: 16px; font-weight: 600; color: var(--x-label); }
+.score-o .score-name { color: var(--o-label); }
+.score-count { font-size: 36px; font-weight: 700; color: var(--ink); }
+.score-hint { margin: 0; color: var(--muted); font-size: 14px; }
+.score-hint[hidden] { display: none; }
 
 .button {
   border: 0;
