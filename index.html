@@ -25,6 +25,20 @@
         <span class="pill" id="status">Player X</span>
       </div>
       <button class="button" id="restart" type="button">Restart round</button>
+      <section class="card score-card" role="group" aria-labelledby="score-label">
+        <span class="card-label" id="score-label">Score board</span>
+        <div class="scores" aria-live="polite">
+          <div class="score score-x">
+            <span class="score-name">Player X</span>
+            <span class="score-count" id="score-x" aria-label="Player X wins">0</span>
+          </div>
+          <div class="score score-o">
+            <span class="score-name">Player O</span>
+            <span class="score-count" id="score-o" aria-label="Player O wins">0</span>
+          </div>
+        </div>
+        <p class="score-hint" id="score-hint">No rounds played yet</p>
+      </section>
     </aside>
 
     <footer class="rules">Draw = all nine squares filled without a winner.</footer>
