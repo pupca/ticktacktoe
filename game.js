@@ -10,6 +10,9 @@ const statusEl = document.getElementById('status');
 const statusLabelEl = document.getElementById('status-label');
 const restartEl = document.getElementById('restart');
 
+const scoreHintEl = document.getElementById('score-hint');
+const scores = { X: 0, O: 0 };
+
 let cells = Array(9).fill(null);
 let player = 'X';
 let over = false;
@@ -38,6 +41,24 @@ function render(win) {
   });
 }
 
+function renderScore(winnerMark) {
+  for (const mark of ['X', 'O']) {
+    const key = mark.toLowerCase();
+    const n = scores[mark];
+    document.getElementById(`score-${key}-count`).textContent = n;
+    const pill = document.getElementById(`score-${key}`);
+    pill.setAttribute('aria-label', `${mark}, ${n} ${n === 1 ? 'win' : 'wins'}`);
+    pill.classList.toggle('won', winnerMark === mark);
+  }
+}
+
+// The hint is only for the Start state: removed from the DOM when the first round ends, never added back.
+function endRound(winnerMark) {
+  if (winnerMark) scores[winnerMark] += 1;
+  renderScore(winnerMark);
+  if (scoreHintEl.isConnected) scoreHintEl.remove();
+}
+
 function setStatus(label, text, kind) {
   statusLabelEl.textContent = label;
   statusEl.textContent = text;
@@ -50,6 +71,7 @@ function play(i) {
   const win = winner(cells);
   if (win) {
     over = true;
+    endRound(win.player);
     setStatus('Round over', `${win.player} wins!`, win.player.toLowerCase());
     restartEl.textContent = 'Play again';
     render(win);
@@ -57,6 +79,7 @@ function play(i) {
   }
   if (cells.every(Boolean)) {
     over = true;
+    endRound(null);
     setStatus('Round over', "It's a draw", 'draw');
     restartEl.textContent = 'Play again';
     render(null);
@@ -73,6 +96,7 @@ function restart() {
   over = false;
   setStatus('Next turn', 'Player X', 'x');
   restartEl.textContent = 'Restart round';
+  renderScore(null);
   render(null);
 }
 

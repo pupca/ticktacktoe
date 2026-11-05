@@ -15,6 +15,15 @@
       <p class="subtitle">Two players, one screen. Three in a row wins.</p>
     </header>
 
+    <section class="card score-card" id="score" role="group" aria-label="Score (rounds won)">
+      <span class="card-label" aria-hidden="true">Score (rounds won)</span>
+      <div class="score-pills" aria-live="polite">
+        <span class="score-pill x" id="score-x" role="text" aria-label="X, 0 wins"><span class="score-player" aria-hidden="true">X</span><span class="score-count" id="score-x-count" aria-hidden="true">0</span></span>
+        <span class="score-pill o" id="score-o" role="text" aria-label="O, 0 wins"><span class="score-player" aria-hidden="true">O</span><span class="score-count" id="score-o-count" aria-hidden="true">0</span></span>
+      </div>
+      <p class="score-hint" id="score-hint">No rounds played yet</p>
+    </section>
+
     <section class="board-card" aria-label="Game board">
       <div class="board" id="board" role="grid" aria-label="Tic-tac-toe board"></div>
     </section>
