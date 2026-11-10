@@ -15,6 +15,23 @@
       <p class="subtitle">Two players, one screen. Three in a row wins.</p>
     </header>
 
+    <!-- GM-1071 score board, design GM-1085 -->
+    <section class="card score-card" aria-labelledby="score-title">
+      <h2 class="score-title" id="score-title">Score board</h2>
+      <div class="tiles">
+        <div class="tile" role="group" aria-labelledby="label-x">
+          <span class="tile-label" id="label-x">X wins</span>
+          <span class="tile-count"><span class="count" id="score-x">0</span><span class="badge" id="badge-x" hidden>+1</span></span>
+        </div>
+        <div class="tile" role="group" aria-labelledby="label-o">
+          <span class="tile-label" id="label-o">O wins</span>
+          <span class="tile-count"><span class="count" id="score-o">0</span><span class="badge" id="badge-o" hidden>+1</span></span>
+        </div>
+      </div>
+      <p class="score-note">Draws are not counted</p>
+      <p class="sr-only" id="score-live" role="status" aria-live="polite"></p>
+    </section>
+
     <section class="board-card" aria-label="Game board">
       <div class="board" id="board" role="grid" aria-label="Tic-tac-toe board"></div>
     </section>

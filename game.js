@@ -1,4 +1,5 @@
-// Tic-Tac-Toe v1: two players on one screen. No backend, nothing is stored.
+// Tic-Tac-Toe: two players on one screen. No backend, nothing is stored.
+// GM-1071: the score lives only in memory while the page is open.
 const LINES = [
   [0, 1, 2], [3, 4, 5], [6, 7, 8], // rows
   [0, 3, 6], [1, 4, 7], [2, 5, 8], // columns
@@ -9,10 +10,14 @@ const boardEl = document.getElementById('board');
 const statusEl = document.getElementById('status');
 const statusLabelEl = document.getElementById('status-label');
 const restartEl = document.getElementById('restart');
+const scoreEls = { X: document.getElementById('score-x'), O: document.getElementById('score-o') };
+const badgeEls = { X: document.getElementById('badge-x'), O: document.getElementById('badge-o') };
+const scoreLiveEl = document.getElementById('score-live');
 
 let cells = Array(9).fill(null);
 let player = 'X';
 let over = false;
+const score = { X: 0, O: 0 };
 
 const MARKS = {
   X: '<svg class="mark mark-x" viewBox="0 0 100 100" aria-hidden="true"><line x1="18" y1="18" x2="82" y2="82"/><line x1="82" y1="18" x2="18" y2="82"/></svg>',
@@ -44,12 +49,26 @@ function setStatus(label, text, kind) {
   statusEl.className = `pill ${kind}`;
 }
 
+// GM-1071: a win adds 1 and shows the "+1" badge; a draw changes nothing
+function addWin(who) {
+  score[who] += 1;
+  scoreEls[who].textContent = score[who];
+  badgeEls[who].hidden = false;
+  scoreLiveEl.textContent = `${who} wins: ${score[who]}. Score X ${score.X}, O ${score.O}.`;
+}
+
+function hideBadges() {
+  badgeEls.X.hidden = true;
+  badgeEls.O.hidden = true;
+}
+
 function play(i) {
   if (over || cells[i]) return;
   cells[i] = player;
   const win = winner(cells);
   if (win) {
     over = true;
+    addWin(win.player);
     setStatus('Round over', `${win.player} wins!`, win.player.toLowerCase());
     restartEl.textContent = 'Play again';
     render(win);
@@ -71,6 +90,7 @@ function restart() {
   cells = Array(9).fill(null);
   player = 'X';
   over = false;
+  hideBadges();
   setStatus('Next turn', 'Player X', 'x');
   restartEl.textContent = 'Restart round';
   render(null);
