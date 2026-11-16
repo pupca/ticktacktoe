@@ -11,8 +11,12 @@ const statusLabelEl = document.getElementById('status-label');
 const restartEl = document.getElementById('restart');
 
 let cells = Array(9).fill(null);
-let player = 'X';
+let starter = 'X'; // who starts the current round; in memory only
+let player = starter;
 let over = false;
+
+// Policy: restarting in the middle of a round keeps the same starter (change here).
+const KEEP_STARTER_ON_MID_ROUND_RESTART = true;
 
 const MARKS = {
   X: '<svg class="mark mark-x" viewBox="0 0 100 100" aria-hidden="true"><line x1="18" y1="18" x2="82" y2="82"/><line x1="82" y1="18" x2="18" y2="82"/></svg>',
@@ -68,10 +72,15 @@ function play(i) {
 }
 
 function restart() {
+  if (over || !KEEP_STARTER_ON_MID_ROUND_RESTART) starter = starter === 'X' ? 'O' : 'X';
+  startRound();
+}
+
+function startRound() {
   cells = Array(9).fill(null);
-  player = 'X';
+  player = starter;
   over = false;
-  setStatus('Next turn', 'Player X', 'x');
+  setStatus('Round starts', `Player ${starter} starts`, starter.toLowerCase());
   restartEl.textContent = 'Restart round';
   render(null);
 }
@@ -84,4 +93,4 @@ for (let i = 0; i < 9; i++) {
   boardEl.appendChild(cell);
 }
 restartEl.addEventListener('click', restart);
-restart();
+startRound();
