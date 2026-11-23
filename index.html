@@ -15,6 +15,23 @@
       <p class="subtitle">Two players, one screen. Three in a row wins.</p>
     </header>
 
+    <section class="card score-card" aria-label="Score board">
+      <span class="card-label">Score</span>
+      <div class="score-tiles" id="score" aria-live="polite">
+        <div class="score-tile x">
+          <span class="score-name">Player X</span>
+          <span class="score-value" id="score-x">0</span>
+          <span class="score-badge" id="badge-x" aria-hidden="true" hidden>+1</span>
+        </div>
+        <div class="score-tile o">
+          <span class="score-name">Player O</span>
+          <span class="score-value" id="score-o">0</span>
+          <span class="score-badge" id="badge-o" aria-hidden="true" hidden>+1</span>
+        </div>
+      </div>
+      <p class="score-note">Draws don't count. Score resets when the page is reloaded.</p>
+    </section>
+
     <section class="board-card" aria-label="Game board">
       <div class="board" id="board" role="grid" aria-label="Tic-tac-toe board"></div>
     </section>

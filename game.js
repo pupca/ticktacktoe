@@ -13,6 +13,7 @@ const restartEl = document.getElementById('restart');
 let cells = Array(9).fill(null);
 let player = 'X';
 let over = false;
+const scores = { X: 0, O: 0 }; // kept in memory only: a reload starts again at 0
 
 const MARKS = {
   X: '<svg class="mark mark-x" viewBox="0 0 100 100" aria-hidden="true"><line x1="18" y1="18" x2="82" y2="82"/><line x1="82" y1="18" x2="18" y2="82"/></svg>',
@@ -38,6 +39,14 @@ function render(win) {
   });
 }
 
+function renderScore(winnerMark) {
+  for (const mark of ['X', 'O']) {
+    const key = mark.toLowerCase();
+    document.getElementById(`score-${key}`).textContent = scores[mark];
+    document.getElementById(`badge-${key}`).hidden = mark !== winnerMark;
+  }
+}
+
 function setStatus(label, text, kind) {
   statusLabelEl.textContent = label;
   statusEl.textContent = text;
@@ -50,6 +59,8 @@ function play(i) {
   const win = winner(cells);
   if (win) {
     over = true;
+    scores[win.player] += 1;
+    renderScore(win.player);
     setStatus('Round over', `${win.player} wins!`, win.player.toLowerCase());
     restartEl.textContent = 'Play again';
     render(win);
@@ -71,6 +82,7 @@ function restart() {
   cells = Array(9).fill(null);
   player = 'X';
   over = false;
+  renderScore(null);
   setStatus('Next turn', 'Player X', 'x');
   restartEl.textContent = 'Restart round';
   render(null);
