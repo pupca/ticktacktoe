@@ -10,6 +10,12 @@ const statusEl = document.getElementById('status');
 const statusLabelEl = document.getElementById('status-label');
 const restartEl = document.getElementById('restart');
 
+// GM-1243 / GM-1246: score board, in memory only (reload resets it)
+const score = { X: 0, O: 0 };
+const scoreEls = { X: document.getElementById('score-x'), O: document.getElementById('score-o') };
+const badgeEls = { X: document.getElementById('badge-x'), O: document.getElementById('badge-o') };
+const scoreLiveEl = document.getElementById('score-live');
+
 let cells = Array(9).fill(null);
 let player = 'X';
 let over = false;
@@ -44,12 +50,20 @@ function setStatus(label, text, kind) {
   statusEl.className = `pill ${kind}`;
 }
 
+function addWin(p) {
+  score[p] += 1;
+  scoreEls[p].textContent = score[p];
+  badgeEls[p].hidden = false;
+  scoreLiveEl.textContent = `Player ${p} has ${score[p]} ${score[p] === 1 ? 'win' : 'wins'}`;
+}
+
 function play(i) {
   if (over || cells[i]) return;
   cells[i] = player;
   const win = winner(cells);
   if (win) {
     over = true;
+    addWin(win.player);
     setStatus('Round over', `${win.player} wins!`, win.player.toLowerCase());
     restartEl.textContent = 'Play again';
     render(win);
@@ -71,6 +85,7 @@ function restart() {
   cells = Array(9).fill(null);
   player = 'X';
   over = false;
+  badgeEls.X.hidden = badgeEls.O.hidden = true;
   setStatus('Next turn', 'Player X', 'x');
   restartEl.textContent = 'Restart round';
   render(null);

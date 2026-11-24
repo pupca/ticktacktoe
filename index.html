@@ -19,6 +19,17 @@
       <div class="board" id="board" role="grid" aria-label="Tic-tac-toe board"></div>
     </section>
 
+    <!-- GM-1243 / GM-1246: score board, kept only in the page -->
+    <section class="card score-card" aria-label="Score">
+      <span class="card-label">Score</span>
+      <div class="tiles">
+        <div class="tile x"><span class="tile-name">Player X</span><span class="tile-count" id="score-x">0</span><span class="badge" id="badge-x" hidden>+1</span></div>
+        <div class="tile o"><span class="tile-name">Player O</span><span class="tile-count" id="score-o">0</span><span class="badge" id="badge-o" hidden>+1</span></div>
+      </div>
+      <p class="score-note">Draws don't count. Score resets when the page is reloaded.</p>
+      <span class="sr-only" id="score-live" aria-live="polite"></span>
+    </section>
+
     <aside class="side">
       <div class="card turn-card" aria-live="polite">
         <span class="card-label" id="status-label">Next turn</span>
