@@ -21,16 +21,17 @@ body {
 
 .app {
   display: grid;
-  grid-template-columns: 1fr 440px 280px 1fr;
+  grid-template-columns: 1fr 280px 440px 280px 1fr;
   grid-template-areas:
-    ". title title ."
-    ". board side ."
-    ". rules rules .";
+    ". title title title ."
+    ". score board side ."
+    ". rules rules rules .";
   gap: 32px 40px;
   padding: 64px 24px;
 }
 
 .title { grid-area: title; }
+.score-card { grid-area: score; align-content: start; }
 .title h1 { margin: 0; font-size: 40px; font-weight: 700; }
 .subtitle { margin: 6px 0 0; color: var(--muted); }
 
@@ -110,12 +111,41 @@ body {
 .button:hover { filter: brightness(1.15); }
 .button:focus-visible { outline: 3px solid var(--o); outline-offset: 3px; }
 
+.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.tile {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  justify-items: center;
+  padding: 14px 8px;
+  border-radius: 16px;
+  background: rgba(228, 87, 46, 0.12);
+  color: var(--x);
+}
+.tile-o { background: rgba(45, 127, 249, 0.12); color: var(--o); }
+.tile-name { font-size: 14px; font-weight: 500; }
+.tile-count { font-size: 56px; font-weight: 700; line-height: 1; }
+.badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  border-radius: 12px;
+  padding: 2px 8px;
+  background: var(--x);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+.tile-o .badge { background: var(--o); }
+.badge[hidden] { display: none; }
+.score-note { margin: 0; color: var(--muted); font-size: 13px; }
+
 .rules { grid-area: rules; color: var(--muted); font-size: 13px; }
 
 @media (max-width: 860px) {
   .app {
     grid-template-columns: minmax(0, 440px);
-    grid-template-areas: "title" "board" "side" "rules";
+    grid-template-areas: "title" "score" "board" "side" "rules";
     justify-content: center;
     padding: 32px 16px;
   }
