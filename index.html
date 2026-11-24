@@ -25,6 +25,14 @@
         <span class="pill" id="status">Player X</span>
       </div>
       <button class="button" id="restart" type="button">Restart round</button>
+      <div class="card score-card" id="score" role="status" aria-live="polite" aria-atomic="true">
+        <span class="card-label">Score<span class="sr-only">:</span></span>
+        <div class="score-tiles">
+          <div class="tile x"><span class="tile-name">Player X</span><span class="sr-only"> </span><span class="tile-num"><span id="score-x">0</span><span class="badge" id="badge-x" aria-hidden="true" hidden>+1</span></span><span class="sr-only">,</span></div>
+          <div class="tile o"><span class="tile-name">Player O</span><span class="sr-only"> </span><span class="tile-num"><span id="score-o">0</span><span class="badge" id="badge-o" aria-hidden="true" hidden>+1</span></span></div>
+        </div>
+        <p class="score-note">Draws don't count. Score resets when the page is reloaded.</p>
+      </div>
     </aside>
 
     <footer class="rules">Draw = all nine squares filled without a winner.</footer>
